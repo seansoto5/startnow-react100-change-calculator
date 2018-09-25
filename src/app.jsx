@@ -7,54 +7,70 @@ class App extends Component {
       amountDue: '',
       amountRecieved: '',
       alert: '',
+      alertMoneyOwed: 'Not enough Payment',
 
       twenties: 0,
-      tens: 0,
-      fives: 0,
-      ones: 0,
+      tens:     0,
+      fives:    0,
+      dollars:  0,
       quarters: 0,
-      dimes: 0,
-      nickles: 0,
-      pennies:0
-    }
-    console.log(amountDue);
+      dimes:    0,
+      nickles:  0,
+      pennies:  0
+    };
 
     this.updateData = this.updateData.bind(this);
-    this.calculate = this.calculate.bind(this);
+    this.calculate  = this.calculate.bind(this);
   }
 
   updateData(e) {
     this.setState({[e.target.name] : e.target.value})
   }
 
+  
+
   calculate(e) {
     e.preventDefault();
     let amountDue = this.state.amountDue;
-    let amountPaid = this.state.amountPaid;
-    let changeDue = (amountDue - amountPaid).toFixed(2);
-    console.log(changeDue);
+    let amountRecieved = this.state.amountRecieved;
+    let change = (amountRecieved - amountDue).toFixed(2);
 
     let currency = {
-      twenty: 20.00,
-      ten: 10.00,
-      five: 5.00,
-      one: 1.00,
-      quarter: .25,
-      dime: .10,
-      nickle: .05,
-      penny: .01
+      twenty:  20.00,
+      ten:     10.00,
+      five:     5.00,
+      dollar:   1.00,
+      quarter:   .25,
+      dime:      .10,
+      nickle:    .05,
+      penny:     .01
     };
 
-    
- 
+    let twenties  = Math.floor(change / currency.twenty);
+    let tens      = Math.floor(((change % currency.twenty).toFixed(2)) / currency.ten);
+    let fives     = Math.floor(((((change % currency.twenty).toFixed(2)) % currency.ten).toFixed(2)) / currency.five);
+    let dollars   = Math.floor(((((((change % currency.twenty).toFixed(2)) % currency.ten).toFixed(2)) % currency.five).toFixed(2)) / currency.dollar);
+    let quarters  = Math.floor(((((((((change % currency.twenty).toFixed(2)) % currency.ten).toFixed(2)) % currency.five).toFixed(2)) % currency.dollar).toFixed(2)) / currency.quarter);
+    let dimes     = Math.floor(((((((((((change % currency.twenty).toFixed(2)) % currency.ten).toFixed(2)) % currency.five).toFixed(2)) % currency.dollar).toFixed(2)) % currency.quarter).toFixed(2)) / currency.dime);
+    let nickles   = Math.floor(((((((((((((change % currency.twenty).toFixed(2)) % currency.ten).toFixed(2)) % currency.five).toFixed(2)) % currency.dollar).toFixed(2)) % currency.quarter).toFixed(2)) % currency.dime).toFixed(2)) / currency.nickle);
+    let pennies   = Math.floor(((((((((((((((change % currency.twenty).toFixed(2)) % currency.ten).toFixed(2)) % currency.five).toFixed(2)) % currency.dollar).toFixed(2)) % currency.quarter).toFixed(2)) % currency.dime).toFixed(2)) % currency.nickle).toFixed(2)) / currency.penny);
 
-    // this.setState({
-    // })
+    this.setState({
+      alert: 'Change due is $' + change,
+      twenties: twenties,
+      tens: tens,
+      fives: fives,
+      dollars: dollars,
+      quarters: quarters,
+      dimes: dimes,
+      nickles: nickles,
+      pennies: pennies
+    })
   }
 
   render() {
     return(
-      <div className='contiainer'>
+      <div className='contiainer' style={{margin: '30px'}}>
       <h1>Change Calculator</h1><hr style={{backgroundColor:'white'}}/>
         <div className='row'>
           <div className='col-4'>
@@ -74,7 +90,7 @@ class App extends Component {
           <div className='col-8'>
           <div className='box'>
         <div className='row'>
-          <div className='alert alert-info' name='alert'>Let's Calculate Some Numbers</div>
+          <div className='alert alert-info' defaultValue={this.state.alert} onChange={this.updateData}>Let's Calculate Some Numbers!</div>
         </div>
         <div className='row'>
           <div name='twentyBox'>
@@ -89,9 +105,9 @@ class App extends Component {
             <h3>Fives</h3>
             <h1>{this.state.fives}</h1>
           </div>
-          <div name='oneBox'>
+          <div name='dollarsBox'>
             <h3>Ones</h3>
-            <h1>{this.state.ones}</h1>
+            <h1>{this.state.dollars}</h1>
           </div>
         </div>
         <div className='row'>
