@@ -5,9 +5,8 @@ class App extends Component {
     super(props);
     this.state = {
       amountDue: '',
-      amountRecieved: '',
-      alert: '',
-      alertMoneyOwed: 'Not enough Payment',
+      amountReceived: '',
+      alert: `Let's Calculate Some Numbers`,
 
       twenties: 0,
       tens:     0,
@@ -32,8 +31,8 @@ class App extends Component {
   calculate(e) {
     e.preventDefault();
     let amountDue = this.state.amountDue;
-    let amountRecieved = this.state.amountRecieved;
-    let change = (amountRecieved - amountDue).toFixed(2);
+    let amountReceived = this.state.amountReceived;
+    let change = (amountReceived - amountDue).toFixed(2);
 
     let currency = {
       twenty:  20.00,
@@ -74,56 +73,58 @@ class App extends Component {
       <h1>Change Calculator</h1><hr style={{backgroundColor:'white'}}/>
         <div className='row'>
           <div className='col-4'>
-            <div className='panel'>
+            <div className='panel' style={{backgroundColor: 'grey'}}>
               <div className='panel-heading'>Enter Information</div>
               <div className='panel-body'>
                 <h6>How much is due?</h6>
                 <input name='amountDue' type='number' defaultValue={this.state.amountDue} onChange={this.updateData}></input>
                 <h6>How much was recieved?</h6>
-                <input name='amountRecieved' type='number' defaultValue={this.state.amountRecieved} onChange={this.updateData}></input>
+                <input name='amountReceived' type='number' defaultValue={this.state.amountReceived} onChange={this.updateData}></input>
               </div>
               <div className='panel-footer'>
-                <button className='btn btn-info' type='submit' name='submit' onClick={this.calculate}>Calculate</button>
+                <button className='button btn-primary' type='submit' onClick={this.calculate}>Calculate</button>
               </div>
             </div>
           </div>
           <div className='col-8'>
           <div className='box'>
         <div className='row'>
-          <div className='alert alert-info' defaultValue={this.state.alert} onChange={this.updateData}>Let's Calculate Some Numbers!</div>
+          <div className='output' style={{margin: '10px'}}>
+            <alert className='alert alert-info'>{this.state.alert}</alert>
+          </div>
         </div>
         <div className='row'>
-          <div name='twentyBox'>
+          <div name='currencyBox'>
             <h3>Twenties</h3>
             <h1>{this.state.twenties}</h1>
           </div>
-          <div name='tenBox'>
+          <div name='currencyBox'>
             <h3>Tens</h3>
             <h1>{this.state.tens}</h1>
           </div>
-          <div name='fiveBox'>
+          <div name='currencyBox'>
             <h3>Fives</h3>
             <h1>{this.state.fives}</h1>
           </div>
-          <div name='dollarsBox'>
+          <div name='currencyBox'>
             <h3>Ones</h3>
             <h1>{this.state.dollars}</h1>
           </div>
         </div>
         <div className='row'>
-          <div name='quartersBox'>
+          <div name='currencyBox'>
             <h3>Quarters</h3>
             <h1>{this.state.quarters}</h1>
           </div>
-          <div name='dimesBox'>
+          <div name='currencyBox'>
             <h3>Dimes</h3>
             <h1>{this.state.dimes}</h1>
           </div>
-          <div name='nicklesBox'>
+          <div name='currencyBox'>
             <h3>Nickles</h3>
             <h1>{this.state.nickles}</h1>
           </div>
-          <div name='penniesBox'>
+          <div name='currencyBox'>
             <h3>Pennies</h3>
             <h1>{this.state.pennies}</h1>
           </div>
@@ -135,72 +136,5 @@ class App extends Component {
     )
   }
 }
-
-// class userPanel extends Component {
-//   render() {
-//     return(
-//     <div className='panel'>
-//     <div className='panel-heading'>Enter Information</div>
-//     <div classname='panel-body'>
-//       <h6>How much is due?</h6>
-//       <input name='amountDue' type='number' defaultValue={this.state.amountDue} onChange={this.updateData}></input>
-//       <h6>How much was recieved?</h6>
-//       <input name='amountRecieved' type='number' defaultValue={this.state.amountRecieved} onChange={this.updateData}></input>
-//     </div>
-//     <div className='panel-footer'>
-//       <button className='btn btn-info' type='submit' name='submit' onClick={this.calculate}>Calculate</button>
-//     </div>
-//   </div>
-//     )
-//   }
-// }
-
-// class resultsPanel extends Component {
-//   render() {
-//     return(
-//     <div className='box'>
-//     <div className='row'>
-//       <div className='alert alert-info' name='alert'>Let's Calculate Some Numbers</div>
-//     </div>
-//     <div className='row'>
-//       <div name='twentyBox'>
-//         <h3>Twenties</h3>
-//         <h1>{this.state.twenties}</h1>
-//       </div>
-//       <div name='tenBox'>
-//         <h3>Tens</h3>
-//         <h1>{this.state.tens}</h1>
-//       </div>
-//       <div name='fiveBox'>
-//         <h3>Fives</h3>
-//         <h1>{this.state.fives}</h1>
-//       </div>
-//       <div name='oneBox'>
-//         <h3>Ones</h3>
-//         <h1>{this.state.ones}</h1>
-//       </div>
-//     </div>
-//     <div className='row'>
-//       <div name='quartersBox'>
-//           <h3>Quarters</h3>
-//           <h1>{this.state.quarters}</h1>
-//         </div>
-//         <div name='dimesBox'>
-//           <h3>Dimes</h3>
-//           <h1>{this.state.dimes}</h1>
-//         </div>
-//         <div name='nicklesBox'>
-//           <h3>Nickles</h3>
-//           <h1>{this.state.nickles}</h1>
-//         </div>
-//         <div name='penniesBox'>
-//           <h3>Pennies</h3>
-//           <h1>{this.state.pennies}</h1>
-//         </div>
-//     </div>
-//     </div>
-//     )
-//   }
-// }
 
 export default App;
